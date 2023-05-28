@@ -13,7 +13,7 @@ def get_price():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     #driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    driver = webdriver.Chrome('/root/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver',
+    driver = webdriver.Chrome(ChromeDriverManager().install(),
                               options=chrome_options)
     url = 'https://www.moex.com/ru/issue.aspx?board=TQBR&code=VSMO&utm_source=www.moex.com&utm_term=vsmpo'
     driver.get(url)
@@ -76,7 +76,7 @@ def run_scheduled_method():
         print(current_time)
         # Проверка расписания и выполнение заданных методов только по будням
         # if current_day >= 0 and current_day <= 4 and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_time.hour == 14 and current_time.minute == 39 and current_time.second == 0:
+        if current_time.hour == 14 and current_time.minute == 44 and current_time.second == 0:
             schedule.run_pending()
             send_price_to_chat(get_price())
 

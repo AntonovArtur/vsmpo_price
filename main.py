@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
-
+from dotenv import load_dotenv
 import telebot
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+
+load_dotenv('/etc/environment')
 
 
 def get_price():

@@ -78,7 +78,7 @@ def run_scheduled_method():
         print(current_time)
         # Проверка расписания и выполнение заданных методов только по будням
         # if current_day >= 0 and current_day <= 4 and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_time.hour == 14 and current_time.minute == 44 and current_time.second == 0:
+        if current_time.hour == 15 and current_time.minute == 59 and current_time.second == 0:
             schedule.run_pending()
             send_price_to_chat(get_price())
 

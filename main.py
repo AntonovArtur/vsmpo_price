@@ -8,11 +8,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
 
-
 def get_price():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    #driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    # driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver = webdriver.Chrome(ChromeDriverManager().install(),
                               options=chrome_options)
     url = 'https://www.moex.com/ru/issue.aspx?board=TQBR&code=VSMO&utm_source=www.moex.com&utm_term=vsmpo'
@@ -84,6 +83,6 @@ def run_scheduled_method():
         time.sleep(1)
 
 
+send_price_to_chat(get_price())
 # Вызов функции для запуска выполнения метода по расписанию
 run_scheduled_method()
-

@@ -11,6 +11,8 @@ from selenium.webdriver.chrome.options import Options
 def get_price():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     # driver = webdriver.Chrome("/driver/chromedriver_linux64/chromedriver",options=chrome_options)
     url = 'https://www.moex.com/ru/issue.aspx?board=TQBR&code=VSMO&utm_source=www.moex.com&utm_term=vsmpo'

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-import schedule as schedule
 import telebot
 from telebot import types
 from selenium import webdriver

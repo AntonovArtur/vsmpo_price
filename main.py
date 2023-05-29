@@ -22,6 +22,7 @@ def get_price():
 
     # Поиск элемента на странице
     driver.find_element(By.XPATH, "//div[@id='disclaimer-modal']//a[.='Согласен']").click()
+    time.sleep(5)
     element = driver.find_element(By.XPATH, "//div[@class='em_right_top']/span[@class='price']")
     text_price = element.text
     # Вывод текста элемента
@@ -50,6 +51,7 @@ def send_price_to_chat(get_price_text):
     # Пример использования
     text = "\n\n📈 Стоимость 1 акции ВСМПО\\-Ависма \(VSMO\) на московской бирже составляет *text_price*\n\\#мосбиржа \\#vsmpo"
     text = text.replace("text_price", get_price_text)
+    print(text)
     send_message_to_channel(text)
 
 
@@ -76,10 +78,16 @@ def run_scheduled_method():
 
         # Получение текущего дня недели
         current_day = current_time.weekday()
-        print(current_time)
+        if current_time.minute % 10 == 0:
+            print(current_time)
+
+        if current_time.minute == 59:
+            print(current_time)
+            print(str(current_day) + " 0 - 4 это буднии дни")
+
         # Проверка расписания и выполнение заданных методов только по будням if current_day >= 0 and current_day <= 4
         #  and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_time.hour == 10 and current_time.minute == 0 and current_time.second == 0:
+        if current_day <= 4 and current_time.hour == 11 and current_time.minute == 30 and current_time.second == 0:
             schedule.run_pending()
             send_price_to_chat(get_price())
 
@@ -88,4 +96,5 @@ def run_scheduled_method():
 
 
 # Вызов функции для запуска выполнения метода по расписанию
+print(get_price() + " это текущая цена на сайте")
 run_scheduled_method()

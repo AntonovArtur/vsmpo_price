@@ -16,27 +16,19 @@ def get_price():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    # driver = webdriver.Chrome("/driver/chromedriver_linux64/chromedriver",options=chrome_options)
     url = 'https://www.moex.com/ru/issue.aspx?board=TQBR&code=VSMO&utm_source=www.moex.com&utm_term=vsmpo'
     driver.get(url)
-
     # Поиск элемента на странице
     driver.find_element(By.XPATH, "//div[@id='disclaimer-modal']//a[.='Согласен']").click()
     time.sleep(5)
     element = driver.find_element(By.XPATH, "//div[@class='em_right_top']/span[@class='price']")
     text_price = element.text
-    # Вывод текста элемента
-    # print(text_price)
-
-    # Закрытие браузера
     driver.quit()
     return text_price
 
 
 def send_price_to_chat(get_price_text):
-    # Вставьте токен вашего бота Telegram
     bot_token = os.environ['BOT_TOKEN']
-    supergroup_username = '@+RKBDwebcUqxjMDZi'
     # Вставьте ID группы, в которую вы хотите отправить сообщение +RKBDwebcUqxjMDZi
     channel_id = -1001311177845
     # тестовый чат channel_id = -1001960945097
@@ -78,23 +70,21 @@ def run_scheduled_method():
 
         # Получение текущего дня недели
         current_day = current_time.weekday()
-        if current_time.minute % 10 == 0:
-            print(current_time)
 
         if current_time.minute == 59:
             print(current_time)
-            print(str(current_day) + " 0 - 4 это буднии дни")
+            print(str(current_day) + " если 0 - 4 это буднии дни")
 
         # Проверка расписания и выполнение заданных методов только по будням if current_day >= 0 and current_day <= 4
         #  and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_day <= 4 and current_time.hour == 11 and current_time.minute == 40 and current_time.second == 0:
-            schedule.run_pending()
+        if current_day <= 4 and current_time.hour == 10 and current_time.minute == 10 and current_time.second == 0:
             send_price_to_chat(get_price())
+            schedule.run_pending()
+
 
         # Задержка в 1 секунду перед проверкой расписания снова
         time.sleep(1)
 
 
 # Вызов функции для запуска выполнения метода по расписанию
-print(get_price() + " это текущая цена на сайте")
 run_scheduled_method()

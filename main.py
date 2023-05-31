@@ -7,6 +7,11 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
+import datetime
+import schedule
+import time
+import pytz
+
 load_dotenv('/etc/environment')
 
 
@@ -31,30 +36,21 @@ def send_price_to_chat(get_price_text):
     bot_token = os.environ['BOT_TOKEN']
     # Вставьте ID группы, в которую вы хотите отправить сообщение +RKBDwebcUqxjMDZi
     channel_id = -1001311177845
-    # тестовый чат channel_id = -1001960945097
-
+    channel_id_test = -1001960945097  # тестовый чат
     # Создаем экземпляр бота
     bot = telebot.TeleBot(bot_token)
-
-    # Отправляем сообщение в канал
-    def send_message_to_channel(message):
-        bot.send_message(channel_id, message, parse_mode='MarkdownV2')
-
-    # Пример использования
-    text = "\n\n📈 Стоимость 1 акции ВСМПО\\-Ависма \(VSMO\) на московской бирже составляет *text_price*\n\\#мосбиржа \\#vsmpo"
-    text = text.replace("text_price", get_price_text)
-    print(text)
-    send_message_to_channel(text)
+    if get_price_text == "- ₽":
+        bot.send_message(channel_id_test, "опять цена ебет мозги", parse_mode='MarkdownV2')
+    else:
+        text = "\n\n📈 Стоимость 1 акции ВСМПО\\-Ависма \(VSMO\) на московской бирже составляет *text_price*\n\\#мосбиржа \\#vsmpo"
+        text = text.replace("text_price", get_price_text)
+        print(text)
+        bot.send_message(channel_id, text, parse_mode='MarkdownV2')
 
 
 # schedule.every().monday.to.friday.at('10:00').do(send_price_to_chat(get_price()))
 # while True:
 #     schedule.run_pending()
-
-import datetime
-import schedule
-import time
-import pytz
 
 
 def run_scheduled_method():
@@ -71,20 +67,18 @@ def run_scheduled_method():
         # Получение текущего дня недели
         current_day = current_time.weekday()
 
-        if current_time.minute == 59:
+        if current_time.minute == 59 and current_time.second == 59:
             print(current_time)
             print(str(current_day) + " если 0 - 4 это буднии дни")
 
         # Проверка расписания и выполнение заданных методов только по будням if current_day >= 0 and current_day <= 4
         #  and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_day <= 4 and current_time.hour == 10 and current_time.minute == 10 and current_time.second == 0:
+        if current_day <= 4 and current_time.hour == 10 and current_time.minute == 00 and current_time.second == 0:
             send_price_to_chat(get_price())
-            schedule.run_pending()
-
+            # schedule.run_pending()
 
         # Задержка в 1 секунду перед проверкой расписания снова
         time.sleep(1)
 
 
-# Вызов функции для запуска выполнения метода по расписанию
 run_scheduled_method()

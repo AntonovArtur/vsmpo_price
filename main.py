@@ -20,7 +20,7 @@ def get_price():
     driver.get(url)
     # Поиск элемента на странице
     driver.find_element(By.XPATH, "//div[@id='disclaimer-modal']//a[.='Согласен']").click()
-    time.sleep(5)
+    time.sleep(30)
     element = driver.find_element(By.XPATH, "//div[@class='em_right_top']/span[@class='price']")
     text_price = element.text
     driver.quit()

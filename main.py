@@ -42,7 +42,7 @@ def send_price_to_chat(get_price_text):
     if get_price_text == "- ₽":
         bot.send_message(channel_id_test, "опять цена ебет мозги", parse_mode='MarkdownV2')
     else:
-        text = "\n\n📈 Стоимость 1 акции ВСМПО\\-Ависма \(VSMO\) на московской бирже составляет *text_price*\n\\#мосбиржа \\#vsmpo"
+        text = "\n\n📈 Стоимость 1 акции ВСМПО\\-АВИСМА \(VSMO\) на московской бирже составляет *text_price*\n\\#мосбиржа \\#vsmpo"
         text = text.replace("text_price", get_price_text)
         print(text)
         bot.send_message(channel_id, text, parse_mode='MarkdownV2')
@@ -73,7 +73,7 @@ def run_scheduled_method():
 
         # Проверка расписания и выполнение заданных методов только по будням if current_day >= 0 and current_day <= 4
         #  and current_time.hour == 9 and current_time.minute == 56 and current_time.second == 00:
-        if current_day <= 4 and current_time.hour == 10 and current_time.minute == 40 and current_time.second == 0:
+        if current_day <= 4 and current_time.hour == 10 and current_time.minute == 00 and current_time.second == 0:
             send_price_to_chat(get_price())
             # schedule.run_pending()
 
